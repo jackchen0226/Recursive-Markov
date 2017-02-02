@@ -47,7 +47,11 @@ def firstword():
 
     fwordlist = list(worddict.keys())
     return fwordlist[randint(0,len(fwordlist[:-1]))]
-
+'''
+@click.command()
+@click.option("--maxwords", default=8, help="Maximum possible number of words in a sentence.")
+@click.option("--minwords", default=4, help="Minimum number of words allowed in a sentence.")
+'''
 # Use probability with a number gen and convert dict to list, repeating a word multiple times based on their value. Number gen's range would be from 0 to size of list. It generates a number and that's the next word. 
 # This function could and firstword() could be another file; these only generate the chain while wordparse() collects data.
 def markovgen(startword, minwords=4, maxwords=8):
@@ -79,9 +83,5 @@ def markovgen(startword, minwords=4, maxwords=8):
             return "Chain failed, no data for chained word: {}".format(chainword)
 
     return " ".join(chainoutput)
-'''
-@click.command()
-@click.option("--maxwords", default=8, help="Maximum possible number of words in a sentence.")
-@click.option("--minwords", default=4, help="Minimum number of words allowed in a sentence.")
-'''
+
 print(markovgen(firstword()))
