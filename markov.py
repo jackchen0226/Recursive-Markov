@@ -1,40 +1,45 @@
 import pickle
 from random import randint, shuffle
 from string import ascii_lowercase, punctuation
-import collections as coll
+from collections import defaultdict
 import click
 from psutil import virtual_memory
+import nltk
+from nltk import word_tokenize
 
 txtinput = ""
 
 # Takes a sample text and finds words within them
-def wordparse(text):
+def wordparse(txt):
     # Words are determined with spaces. Will add edge cases (links, punctuation) later
-    words = text.split(" ")
-    # Double space edge case; they become empty strings
-    if "" in words:
-        for i in range(words.count("")):
-            words.remove("")
-
-    punct = tuple(list(string.punctuation))
-    for i in range(len(words)):
-        if words[i].endswith(punct):
-            words[i] = words[i][:-1]
-        if "http" and "://" in words[i]:
-            words.remove(words[i])
-
-    print(words[0])
+    words = word_tokenize(txt)
+    punct = tuple(list(punctuation))
+    # Will filter links out later with regex
+    for i in words:
+        if i in punct:
+            words.remove(i)
+        
+    text = nltk.Text(words)
 
     wordpkl = open("worddict.pkl", "rb")
     worddict = pickle.load(wordpkl)
     wordpkl.close()
 
+    articles = ["the", "a", "an", "some", "not"]
     for i in range(len(words)-1):
         try:
             worddict[words[i]][words[i+1]] += 1
         except KeyError:
-            worddict[words[i]] = coll.defaultdict(int)
+            worddict[words[i]] = defaultdict(int)
             worddict[words[i]][words[i+1]] += 1
+        # Adding addition context for articles by including the previous word
+        if words[i] in articles and i > 0:
+            try:
+                worddict[(words[i], "article")][words[i-1]] += 1
+            except KeyError:
+                worddict[(words[i], "article")] = defaultdict(int)
+                worddict[(words[i], "article")][words[i-1]] += 1
+
     wordpkl = open("worddict.pkl", "wb")
     pickle.dump(worddict, wordpkl, protocol=pickle.HIGHEST_PROTOCOL)
     wordpkl.close()
