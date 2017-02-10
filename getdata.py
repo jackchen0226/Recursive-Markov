@@ -1,7 +1,11 @@
-import markov
+import parser
+import pickle
 
-text = open("ALtext.txt", "r")
-text = text.readlines()
-
-markov.wordparse(text[0])
-
+text = open('ALtext.txt', 'r')
+parse = text.readlines()
+'''
+text = open("MobyDick.pkl", "rb")
+parse = pickle.load(text)
+text.close()
+'''
+parser.wordparse(parse[2])
