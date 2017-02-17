@@ -41,7 +41,7 @@ def wordparse(txt):
             try:
                 worddict[words[i]][1][words[i+1]] += 1
             except KeyError:
-                worddict[words[i]][1] = defaultdict(int)
+                worddict[words[i]] = {1 : defaultdict(int)}
                 worddict[words[i]][1][words[i+1]] += 1
 
     wordpkl = open("worddict.pkl", "wb")

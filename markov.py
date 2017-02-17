@@ -33,11 +33,11 @@ def markovgen(minwords, maxwords, startword = parser.firstword()):
         click.echo("Chain failed, no data for {}".format(startword))
 
     for i in range(randint(minwords + 1, maxwords)):
-        l1 = list(worddata.keys())
+        l1 = list(worddata[1].keys())
         l2 = []
         for w in l1:
             # Clean this up, breaks when articles are listed!!!!
-                for j in range(worddata[w][1]):
+                for j in range(worddata[1][w]):
                     l2.append(w)
                     shuffle(l2)
         chainword = l2[randint(0, len(l2[:-1]))]
@@ -51,19 +51,19 @@ def markovgen(minwords, maxwords, startword = parser.firstword()):
     funcRunning = False
 
 def markovRunning():
-    mems = []
+    mems = [virtual_memory().used]
     while funcRunning:
         mems.append(virtual_memory().used)
-        sleep(0.5)
-    maxmem = max(mems)
-    maxmem = maxmem / 1048576
-    return "The highest memory marked was {} megabytes".format(maxmem)
+        print(mems)
+    #maxmem = max(mems)
+    #maxmem = maxmem / 1048576
+    click.echo("The highest memory marked was {} megabytes".format(mems[0]/1048576))
 
 import threading
-p1 = threading.Thread(target=markovgen)
-p2 = threading.Thread(target=markovRunning)
 
 if __name__ == '__main__':
-    p1.start()
-    p2.start()
+    tmem = threading.Thread(target=markovRunning)
+    tmem.start()
+    markovgen()
+    tmem.join()
         
