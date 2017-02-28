@@ -11,11 +11,12 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-.. py:module:: markov
- 
-.. py:function:: markovgen(minword, maxword, startword)
-   
-   Generates a sentence of length between *minword* and *maxword* through a markov chain.
+.. automodule:: markov
+
+.. automodule:: parser
+
+    Members
+    =======
 
 
 Indices and tables

@@ -26,6 +26,7 @@ def wordparse(txt):
     articles = ["the", "a", "an", "some", "not"]
     for i in range(len(words)-1):
         # Adding addition context for articles by including the previous word
+        # To-Do: make sure that if an article is detected, include the next few words until no article is detected and place unto sentence.
         if words[i].lower() in articles and i > 0:
             try:
                 worddict[words[i]][1][words[i+1]] += 1

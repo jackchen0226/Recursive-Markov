@@ -81,7 +81,10 @@
             
                 <!-- Local TOC -->
                 <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to markovgen&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#">Welcome to markovgen&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#members">Members</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </div>
@@ -133,11 +136,36 @@
 <div class="toctree-wrapper compound">
 </div>
 <span class="target" id="module-markov"></span><dl class="function">
-<dt id="markov.markovgen">
-<code class="descclassname">markov.</code><code class="descname">markovgen</code><span class="sig-paren">(</span><em>minword</em>, <em>maxword</em>, <em>startword</em><span class="sig-paren">)</span><a class="headerlink" href="#markov.markovgen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a sentence of length between <em>minword</em> and <em>maxword</em> through a markov chain.</p>
+<dt id="markov.markovRunning">
+<code class="descclassname">markov.</code><code class="descname">markovRunning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#markov.markovRunning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Measures the memory usage of markovgen() as it is running.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="markov.markovgen">
+<code class="descclassname">markov.</code><code class="descname">markovgen</code><span class="sig-paren">(</span><em>minw</em>, <em>maxw</em>, <em>startword</em><span class="sig-paren">)</span><a class="headerlink" href="#markov.markovgen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses markov chains to generate a sentence of variable length from a pickled dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>minw</strong> (<em>int</em>) &#8211; The bare minimum amount of words in the sentence.</li>
+<li><strong>maxw</strong> (<em>int</em>) &#8211; The maximum amount of words allowed in the sentence</li>
+<li><strong>startword</strong> (<em>str</em>) &#8211; A starting word for the chain. The default is declared in genwrapper() as firstword() from the parser module.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>str</em> &#8211; The generated sentence or an error of the chain failing if not enough data is present.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-parser"></span><div class="section" id="members">
+<h2>Members<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

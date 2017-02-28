@@ -13,10 +13,19 @@ import parser
 # Use probability with a number gen and convert dict to list, repeating a word multiple times based on their value. Number gen's range would be from 0 to size of list. It generates a number and that's the next word. 
 # This function could and firstword() could be another file; these only generate the chain while wordparse() collects data.
 funcRunning = False
-@click.command()
-@click.option("--maxwords", default=8, help="Maximum possible number of words in a sentence.")
-@click.option("--minwords", default=4, help="Minimum number of words allowed in a sentence.")
-def markovgen(minwords, maxwords, startword = parser.firstword()):
+def markovgen(minw, maxw, startword):
+    """Uses markov chains to generate a sentence of variable length from a pickled dataset.
+    
+    Args:
+        minw (int): The bare minimum amount of words in the sentence.
+        maxw (int): The maximum amount of words allowed in the sentence
+        startword (str): A starting word for the chain. The default is declared in genwrapper() as firstword() from the parser module.
+        
+    Returns:
+        str: The generated sentence or an error of the chain failing if not enough data is present."""
+
+    if minw >= maxw:
+        maxw = minw
     funcRunning = True
     chainoutput = []
     chainoutput.append(startword)
@@ -30,9 +39,9 @@ def markovgen(minwords, maxwords, startword = parser.firstword()):
         worddata = worddict[startword]
         # A defaultdict of the second word in chain
     except KeyError:
-        click.echo("Chain failed, no data for {}".format(startword))
+        return "Chain failed, no data for {}".format(startword)
 
-    for i in range(randint(minwords + 1, maxwords)):
+    for i in range(randint(minw, maxw)):
         l1 = list(worddata[1].keys())
         l2 = []
         for w in l1:
@@ -45,12 +54,13 @@ def markovgen(minwords, maxwords, startword = parser.firstword()):
         try:
             worddata = worddict[chainword]
         except KeyError:
-            click.echo("Chain failed, no data for chained word: {}".format(chainword))
+            return "Chain failed, no data for chained word: {}".format(chainword)
 
-    click.echo(" ".join(chainoutput))
+    return " ".join(chainoutput)
     funcRunning = False
 
 def markovRunning():
+    """Measures the memory usage of markovgen() as it is running."""
     mems = [virtual_memory().used]
     while funcRunning:
         mems.append(virtual_memory().used)
@@ -59,11 +69,18 @@ def markovRunning():
     #maxmem = maxmem / 1048576
     click.echo("The highest memory marked was {} megabytes".format(mems[0]/1048576))
 
+@click.command()
+@click.option('--minwords', default=4, help='Sets the minimum amount of words in a sentence')
+@click.option('--maxwords', default=8, help='Sets the maximum possible words in a sentence')
+def genwrapper(minwords, maxwords):
+    """A wrapper for markovgen() for click implementation"""
+    click.echo(markovgen(minwords, maxwords, startword=parser.firstword()))
+
 import threading
 
 if __name__ == '__main__':
     tmem = threading.Thread(target=markovRunning)
     tmem.start()
-    markovgen()
+    genwrapper()
     tmem.join()
         
