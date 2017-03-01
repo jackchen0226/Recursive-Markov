@@ -143,7 +143,7 @@
 
 <dl class="function">
 <dt id="markov.markovgen">
-<code class="descclassname">markov.</code><code class="descname">markovgen</code><span class="sig-paren">(</span><em>minw</em>, <em>maxw</em>, <em>startword</em><span class="sig-paren">)</span><a class="headerlink" href="#markov.markovgen" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">markov.</code><code class="descname">markovgen</code><span class="sig-paren">(</span><em>minw: int</em>, <em>maxw: int</em>, <em>startword: str</em><span class="sig-paren">)</span><a class="headerlink" href="#markov.markovgen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses markov chains to generate a sentence of variable length from a pickled dataset.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -163,8 +163,37 @@
 </table>
 </dd></dl>
 
+<dl class="data">
+<dt id="markov.start">
+<code class="descclassname">markov.</code><code class="descname">start</code><em class="property"> = 502312.291083101</em><a class="headerlink" href="#markov.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>A markov chain is a mathematical process in which a word, or some object, is taken and the probability of a next word is taken to predict the next word in the sequence. The words with a higher probability of appearing after the first word will, most likely, appear next. That process would be repeated for the second word until some end condition is met. For example, say the word &#8220;blue&#8221; is first. The words &#8220;car&#8221;, &#8220;blanket&#8221;, and &#8220;colored&#8221; have %50, %5, and %45 chance of appearing after the word &#8220;blue&#8221;. Most likely the next word is &#8220;car&#8221; and &#8220;colored&#8221; having a slightly lower chance of appearing with &#8220;blanket&#8221; being the last. Say the next word is &#8220;blanket&#8221;, then the process repeats again with &#8220;blanket&#8220;&#8216;s data.</p>
+</dd></dl>
+
 <span class="target" id="module-parser"></span><div class="section" id="members">
 <h2>Members<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="parser.firstword">
+<code class="descclassname">parser.</code><code class="descname">firstword</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#parser.firstword" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple function that finds and returns a random word from worddict</p>
+<p>Returns: A string of one of the keys of worddict.pkl</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="parser.wordparse">
+<code class="descclassname">parser.</code><code class="descname">wordparse</code><span class="sig-paren">(</span><em>txt</em><span class="sig-paren">)</span><a class="headerlink" href="#parser.wordparse" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parser to collect data from a body of text or pretokenized text through the Natural Language ToolKit (NLTK). Data about the words are stored in a dictionary and pickled for hard storage and, theorectically, produces natural sentences with more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>txt</strong> (<em>str or int</em>) &#8211; A large body of text or a list of tokenized words.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A pickled library in the same directory named worddict.pkl</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="indices-and-tables">

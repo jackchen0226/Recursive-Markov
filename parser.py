@@ -6,6 +6,13 @@ from collections import defaultdict
 from random import randint
 
 def wordparse(txt):
+    """A parser to collect data from a body of text or pretokenized text through the Natural Language ToolKit (NLTK). Data about the words are stored in a dictionary and pickled for hard storage and, theorectically, produces natural sentences with more information.
+    
+    Args:
+        txt (str or int): A large body of text or a list of tokenized words.
+        
+    Returns:
+        A pickled library in the same directory named worddict.pkl"""
     if type(txt) == str:
         words = word_tokenize(txt)
     if type(txt) == list:
@@ -50,6 +57,9 @@ def wordparse(txt):
     wordpkl.close()
 
 def firstword():
+    """A simple function that finds and returns a random word from worddict
+    
+    Returns: A string of one of the keys of worddict.pkl"""
     wordpkl = open("worddict.pkl", "rb")
     worddict = pickle.load(wordpkl)
     wordpkl.close()
