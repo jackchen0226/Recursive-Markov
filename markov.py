@@ -1,13 +1,10 @@
-import pickle
 from random import randint, shuffle
 from string import ascii_lowercase, punctuation
 from collections import defaultdict
-import click
-from psutil import virtual_memory
 import nltk
 from nltk import word_tokenize
 import parser
-import time
+import time, os, psutil, click, pickle
 from timeit import default_timer as timer
 
 ''' A markov chain is a mathematical process in which a word, or some object, is taken and the probability of a next word is taken to predict the next word in the sequence. The words with a higher probability of appearing after the first word will, most likely, appear next. That process would be repeated for the second word until some end condition is met. For example, say the word "blue" is first. The words "car", "blanket", and "colored" have %50, %5, and %45 chance of appearing after the word "blue". Most likely the next word is "car" and "colored" having a slightly lower chance of appearing with "blanket" being the last. Say the next word is "blanket", then the process repeats again with "blanket"'s data.'''
@@ -73,12 +70,10 @@ def markovgen(minw : int, maxw : int, startword : str):
     
 def markovRunning():
     """Measures the memory usage of markovgen() as it is running."""
-    mems = [virtual_memory().used]
+    mems = [psutil.Process(os.getpid()).memory_info().rss]
     while funcRunning[0]:
-        mems.append(virtual_memory().used)
+        mems.append(psutil.Process(os.getpid()).memory_info().rss)
         time.sleep(0.001)
- #       if len(mems) > 1000000:
-  #          break
     maxmem = max(mems)
     maxmem = maxmem / 1048576 
     print("The starting memory was {} megabytes".format(mems[0]/1048576))
@@ -100,5 +95,5 @@ if __name__ == '__main__':
     #genwrapper()
     print(markovgen(4, 8, startword=parser.firstword()))
     end = timer()
-    print("Time elapsed: {} seconds".format((end - start)*60))
+    print("Time elapsed: {} seconds".format((end - start)))
     tmem.join()    
