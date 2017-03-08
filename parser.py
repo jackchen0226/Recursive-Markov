@@ -19,6 +19,8 @@ def wordparse(txt):
         # For already tokenized texts
         words = txt
     punct = tuple(list(punctuation))
+    punct.append('""')
+    punct.appemd("''")
     # Will filter links out later with regex
     for i in words:
         if i in punct:
